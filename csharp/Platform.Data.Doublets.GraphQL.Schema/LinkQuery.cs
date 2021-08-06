@@ -7,7 +7,7 @@ namespace GraphQL.Samples.Schemas.Link
 {
     public class LinkQuery : ObjectGraphType
     {
-        public LinkQuery(ILinks Link)
+        public LinkQuery()
         {
             Field<ListGraphType<LinkType>>("links",
                 arguments: new QueryArguments(
@@ -15,12 +15,12 @@ namespace GraphQL.Samples.Schemas.Link
                 ),
                 resolve: context =>
                 {
-                    long receivedLink = context.GetArgument<long>("limit");
                     if (context.HasArgument("limit"))
                     {
-                        return Link.AllLinks.Take((int)receivedLink);
+                        long receivedLink = context.GetArgument<long>("limit");
+                        return new List<Link>();
                     }
-                    return Link.AllLinks.Take(0);
+                    return new List<Link>();
                 });
         }
     }
